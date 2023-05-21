@@ -26,6 +26,16 @@ namespace Assignment1
         public IConfiguration Configuration { get; set; }
         public void ConfigureServices(IServiceCollection service)
         {
+            service.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyHeader()
+                               .AllowAnyMethod();
+                    });
+            });
 
 
 
@@ -54,6 +64,8 @@ namespace Assignment1
             {
                 app.UseDeveloperExceptionPage();  
             }
+            app.UseCors("AllowAllOrigins");
+
             app.UseRouting();
             
             app.UseEndpoints(endpoints =>
